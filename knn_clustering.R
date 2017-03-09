@@ -7,7 +7,7 @@
 # function to define how data points are combined
 # mean of positions, error adjusted based on max errors, distance
 # @ single collasped event
-knn.collapse <- function(data, inds, distance) {
+knn.collapse <- function(data, inds) {
 		event = data[inds,][1,]
 		event$xnm = mean(data$xnm[inds])
 		event$ynm = mean(data$ynm[inds])
@@ -44,7 +44,7 @@ knn.collapse.pairs <- function(data, kps) {
 		pb <- txtProgressBar(min = 0, max = nrow(kidx), style = 3);
 		for(x in 1:nrow(kidx)) {
 			inds = c(kidx[x,1:2])
-			event = knn.collapse(data, inds, kidx[x,3])
+			event = knn.collapse(data, inds)
 			rc[[x]] = event
 			setTxtProgressBar(pb, x)
 		}
@@ -70,7 +70,7 @@ knn.pairs.exhaust <- function(data, kcp) {
 				s2 = kcp[grep(paste("^", search_ids[x], "-", sep=""), kcp$ids),]
 				sk = rbind(s1, s2)
 				inds = as.numeric(unique(unlist(strsplit(sk$ids, "-"))))
-				event = knn.collapse(data, inds, max(data$locprecnm[inds]))
+				event = knn.collapse(data, inds)
 				nscs[[x]] = event
 				setTxtProgressBar(pb, x)
 			}
