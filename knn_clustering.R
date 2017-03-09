@@ -91,6 +91,7 @@ kdata = kdata[order(kdata$xnm, kdata$ynm, kdata$znm),]
 kdata$npoints = rep(1, nrow(kdata))
 kdata$real_id = 1:nrow(kdata); 
 kdata$ids = kdata$real_id
+n = nrow(kdata)
 
 # Iteratively cluster events until full closure is achieved 
 # NB. the remianing singletons are added back at each iterative - may now fall within a new events error
