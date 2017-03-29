@@ -75,7 +75,7 @@ knn.pairs.exhaust <- function(data, kcp) {
         ic = kcp[inds>0,]
         oc = kcp[inds==0,]
         pin = 1
-        pb <- txtProgressBar(min = 0, max = nrow(ic), style = 3);
+        # pb <- txtProgressBar(min = 0, max = nrow(ic), style = 3);
         while(length(ic)>0) {
             if(is.null(dim(ic))) { ic = cbind(ic[1], ic[2]) }
             w = which(ic[,1]==ic[1,1] | ic[,2]==ic[1,1] | ic[,1]==ic[1,2] | ic[,2]==ic[1,2] )
@@ -87,9 +87,9 @@ knn.pairs.exhaust <- function(data, kcp) {
             nid = c(nid, paste(ns, collapse="-"))
             ic = ic[-w,]
             pin = pin +1
-            setTxtProgressBar(pb, pin-nrow(ic))
+            #setTxtProgressBar(pb, pin-nrow(ic))
         }
-        close(pb);
+        #close(pb);
     }
     icls = do.call(rbind, lapply(nscs, function(x) knn.collapse(data, x)))
     ocls = NULL
