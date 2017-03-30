@@ -107,7 +107,7 @@ require(FNN)
 
 # read speific data set, sort and add some new ids
 data = read.table("6_160620_NW_mEGFP-NCAPH_GFP-NB-sortase-AF647_1_driftc_sml.csv", header=T, sep=",")
-kdata = data
+kdata = data[1:100,]
 kdata = kdata[order(kdata$xnm, kdata$ynm, kdata$znm),]
 kdata$npoints = rep(1, nrow(kdata))
 kdata$real_ids = 1:nrow(kdata);
