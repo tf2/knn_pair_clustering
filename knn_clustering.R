@@ -14,7 +14,6 @@ knn.collapse <- function(data, inds) {
     event$znm = mean(data$znm[inds])
     event$npoints = sum(data$npoints[inds])
     event$locprecnm = max(c(data$locprecnm[inds], max(dist(data[inds,c("xnm", "ynm", "znm")]))))
-    #event$ids = paste(inds, collapse="-")
     inds1 = c(as.numeric(unique(unlist(strsplit(as.character(data$real_ids[inds]), "-")))), as.numeric(unique(unlist(strsplit(as.character(data$ids[inds]), "-")))))
     event$real_ids = paste(unique(inds1[order(inds1)]), collapse="-")
     return(event)
@@ -75,7 +74,6 @@ knn.pairs.exhaust <- function(data, kcp) {
         ic = kcp[inds>0,]
         oc = kcp[inds==0,]
         pin = 1
-        # pb <- txtProgressBar(min = 0, max = nrow(ic), style = 3);
         while(length(ic)>0) {
             if(is.null(dim(ic))) { ic = cbind(ic[1], ic[2]) }
             w = which(ic[,1]==ic[1,1] | ic[,2]==ic[1,1] | ic[,1]==ic[1,2] | ic[,2]==ic[1,2] )
@@ -87,9 +85,7 @@ knn.pairs.exhaust <- function(data, kcp) {
             nid = c(nid, paste(ns, collapse="-"))
             ic = ic[-w,]
             pin = pin +1
-            #setTxtProgressBar(pb, pin-nrow(ic))
         }
-        #close(pb);
     }
     icls = do.call(rbind, lapply(nscs, function(x) knn.collapse(data, x)))
     ocls = NULL
@@ -107,7 +103,6 @@ require(FNN)
 
 # read speific data set, sort and add some new ids
 data = read.table("6_160620_NW_mEGFP-NCAPH_GFP-NB-sortase-AF647_1_driftc_sml.csv", header=T, sep=",")
-kdata = data[1:100,]
 kdata = kdata[order(kdata$xnm, kdata$ynm, kdata$znm),]
 kdata$npoints = rep(1, nrow(kdata))
 kdata$real_ids = 1:nrow(kdata);
